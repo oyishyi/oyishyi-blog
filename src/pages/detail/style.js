@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 
-export const StyledDetail = styled.div`
+export const StyledDetail = styled.main`
     padding-top: 20px;
     background-color: #f4f5f5;
 
@@ -22,7 +22,7 @@ export const DetailLeft = styled.div`
     
 `
 
-export const StyledMainArticle = styled.article`
+export const StyledMainArticle = styled.div`
     padding: 24px 24px 0 24px;
     background-color: #fff;
 `
@@ -62,6 +62,43 @@ export const AuthorInfoArticle = styled.div`
         }
     }
 `
+
+// maekdown 转化后的 html 文章的样式
+export const MainContent = styled.article`
+    line-height: 20px;
+    color: #333;
+
+    & img {
+        display: block;
+        width: 80%;
+        height: 80%;
+    }
+    & h1 {
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 60px;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+    }
+    & h2 {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 40px;
+        color: #999;
+    }
+    & p {
+        margin-top: 10px;
+    }
+    & li {
+        margin-left: 20px;
+    }
+    & ul > li {
+        list-style: circle;
+    }
+    & ol > li {
+        list-style: decimal;
+    }
+`;
+
 
 /**************************************************************************************************
  * 右边栏的样式

@@ -3,7 +3,7 @@ import logo from "../../static/logo/logo64.png"
 
 // Login组件的样式和组件代码在同一个文件夹里
 
-
+// 导航栏整体样式
 export const StyledHeader = styled.header`
 
     position: sticky; top: 0px; left: 0;
@@ -15,6 +15,30 @@ export const StyledHeader = styled.header`
     color: #999;
     background-color: #fff;
     z-index: 998; /*仅次于登陆弹窗*/
+
+    /***********************************
+    * 导航栏隐藏/显示动画
+    ***********************************/
+    &.header-appear-exit {
+        top: 0;
+    }
+    &.header-appear-exit-active {
+        top: -60px;
+        transition: top 0.2s;
+    }
+    &.header-appear-exit-done {
+        top: -60px;
+    }
+    &.header-appear-enter {
+        top: -60px;
+    }
+    &.header-appear-enter-active {
+        top: 0px;
+        transition: top 0.2s;
+    }
+    &.header-appear-enter-done {
+        top: 0px;
+    }
 `
 
 export const Nav = styled.nav`
@@ -185,6 +209,7 @@ export const NavSearchHintTag = styled.a`
     padding: 3px;
     color: #787878;
 `;
+
 
 /******************************************************************************************
  * 右侧的各种功能按钮

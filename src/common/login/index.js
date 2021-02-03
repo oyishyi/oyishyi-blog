@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import * as actionCreators from "../../store/actionCreators.js";
+import * as actionCreators from "../header/store/actionCreators.js";
 
 import {
     StyledLogin,
@@ -26,7 +26,7 @@ export const Login = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    loginStatus: state.getIn(["Header", "loginStatus"])
+    loginStatus: state.getIn(["Header", "loginStatus"]) // 登录状态是 Header 的状态，用户信息是 Login 的状态
 })
 
 const mapDispatchToProps = (dispatch) => {

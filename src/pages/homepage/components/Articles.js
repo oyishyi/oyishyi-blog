@@ -14,9 +14,9 @@ import {
 } from "../style.js";
 
 
-
-
-const DETAIL_URL = "/detail/"; // 详情页面的网址
+// 详情页面的网址前缀
+const HASH_DETAIL_URL = "/#/detail/"; // 使用 window.open 的话，要手动加 hashtag
+const DETAIL_URL = "/detail/";  // 使用 Link 的话，不用加，或者说不能加，不然就有两个 #，页面跳转错误
 
 export const Articles = (props) => {
 
@@ -33,11 +33,11 @@ export const Articles = (props) => {
                     return (
                         <Article
                             key={article.get("id")}
-                            onClick={() => { window.open(DETAIL_URL + article.get("id")); }}
+                            onClick={() => { window.open(HASH_DETAIL_URL + article.get("id")); }}
                         >
                             <span className="text-info">
                                 <div className="author">
-                                    {article.get("author")} . {article.get("time")} . {article.get("tag")}
+                                    {article.get("author")} · {article.get("time")} · {article.get("tag")}
                                 </div>
                                 {/* 在 parents 元素上让 Link 的点击事件停止传播 */}
                                 <div className="title" onClick={handleStopPropagation}>

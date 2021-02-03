@@ -5,3 +5,4 @@ export const CHANGE_PAGE = "change page";
 export const CHANGE_SHOW_LOGIN_BUTTON = "change show login button";
 export const LOGIN = "login";
 export const CHANGE_SHOW_AVATAR_BOX = "change show avatar box";
+export const CHANGE_SHOW_HEADER = "change show header";

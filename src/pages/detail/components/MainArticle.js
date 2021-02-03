@@ -10,7 +10,8 @@ import {
 
 import {
     StyledMainArticle,
-    AuthorInfoArticle
+    AuthorInfoArticle,
+    MainContent
 } from "../style.js";
 
 
@@ -24,7 +25,7 @@ export const MainArticle = (props) => {
     return (
         <StyledMainArticle>
             <AuthorInfoArticle className="author-info">
-                <img src="../img/homepage.png" alt="头像"/>
+                <img src={props.userInfo.get("avatar")} alt="头像"/>
                 <div className="data-info">
                     <div className="name">oyishyi</div>
                     <div className="meta-box">
@@ -35,18 +36,19 @@ export const MainArticle = (props) => {
                     </div>
                 </div>
             </AuthorInfoArticle>
-            <div className="main-content">
+            <MainContent className="main-content">
                 <ReactMarkdown
                 source={props.article}
                 plugins={[gfm]}
                 allowDangerousHtml
                 />
-            </div>
+            </MainContent>
         </StyledMainArticle>
     )
 }
 
 const mapStateToProps = (state) => ({
+    userInfo: state.getIn(["Header", "userInfo"]),
     article: state.getIn(["Detail", "article"])
 })
 

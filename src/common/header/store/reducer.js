@@ -10,7 +10,9 @@ const initialState = fromJS({
     totalPage: 0,
     showLoginBtn: false,
     loginStatus: false,
-    showAvatarBox: false
+    showAvatarBox: false,
+    showHeader: true,
+    userInfo: {}
 })
 
 export default (state = initialState, { type, payload }) => {
@@ -32,10 +34,19 @@ export default (state = initialState, { type, payload }) => {
         case actionConstants.CHANGE_SHOW_LOGIN_BUTTON:
             return state.set("showLoginBtn", payload.showLoginBtn);
         case actionConstants.LOGIN:
-            return state.set("loginStatus", payload.loginStatus);
+            return state.merge({
+                "loginStatus": payload.loginStatus,
+                "userInfo": payload.userInfo
+            });
         // 头像扩展框
         case actionConstants.CHANGE_SHOW_AVATAR_BOX:
-            return state.set("showAvatarBox", !state.get("showAvatarBox"));
+            if (payload.showAvatarBox === "toggle") {
+                return state.set("showAvatarBox", !state.get("showAvatarBox"));
+            } else {
+                return state.set("showAvatarBox", payload.showAvatarBox);
+            }
+        case actionConstants.CHANGE_SHOW_HEADER:
+            return state.set("showHeader", payload.showHeader);
         default:
             return state;
     }

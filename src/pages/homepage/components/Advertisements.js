@@ -54,15 +54,15 @@ export const Advertisements = (props) => {
     return (
         <>
             <Advertisement
-                tag="强烈推荐"
-                url="https://www.bilibili.com/read/cv1480409/?from=readlist"
-                ad = {advertisement1}
+                tag="推荐，像素画教程"
+                url="https://www.bilibili.com/read/readlist/rl38114"
+                ad={advertisement2}
             >
             </Advertisement>
             <Advertisement
-                tag="推荐"
-                url="https://www.bilibili.com/read/cv1541467"
-                ad={advertisement2}
+                tag="强烈推荐，ytb 上的乐理教程"
+                url="https://www.youtube.com/watch?v=B2HdaiEm3U0&list=PLeHRa-xAEiYRpSdsxpdmr9SQqEw5jw-jX"
+                ad = {advertisement1}
             >
             </Advertisement>
         </>

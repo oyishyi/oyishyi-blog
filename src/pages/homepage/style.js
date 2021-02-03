@@ -83,7 +83,8 @@ export const Article = styled.li`
     background-color: #fff;
     &:hover {
         cursor: pointer;
-        box-shadow: 0 0 3px rgba(0,0,0,0.2);
+        /* box-shadow: 0 0 3px rgba(0,0,0,0.2); */
+        background-color: rgb(240,240,244);
         z-index: 1;
     }
     & > .text-info {
@@ -122,8 +123,9 @@ export const Article = styled.li`
         box-sizing: border-box;
         height: 26px;
         margin-left: -1px;
-        border: 1px solid rgba(220,220,220);
         padding: 0 10px;
+        border: 1px solid #edeeef;
+        border-radius: 2px;
         background-color: #fff;
         color: #b2bac2;
         cursor: pointer;

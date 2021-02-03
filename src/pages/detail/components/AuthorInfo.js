@@ -12,7 +12,7 @@ export const AuthorInfo = (props) => {
         <StyledAuthorInfo>
             <div className="title">关于作者</div>
             <div className="base-info">
-                <img src="../img/homepage.png" alt="头像" />
+                <img src={props.userInfo.get("avatar")} alt="头像" />
                 <div className="data-box">
                     <p className="name">oyishyi</p>
                     <p className="desc">无</p>
@@ -31,7 +31,7 @@ export const AuthorInfo = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-
+    userInfo: state.getIn(["Header", "userInfo"])
 })
 
 const mapDispatchToProps = {

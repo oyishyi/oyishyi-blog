@@ -5,6 +5,7 @@ import ShortcutBtn from "./common/shortcutbtn/index.js";
 import Homepage from "./pages/homepage/index.js";
 import Detail from "./pages/detail/loadable.js";
 import Write from "./pages/write/index.js";
+import UserPage from "./pages/userpage/index.js";
 
 import { HashRouter as Router, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" exact component={Homepage}></Route>
           <Route path="/detail/:id" exact component={Detail}></Route>
           <Route path="/write" exact component={Write}></Route>
+          <Route path="/userpage" exact component={UserPage}></Route>
         </>
       </Router>
     </div>
