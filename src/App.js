@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+
+import Header from "./common/header/index.js";
+import ShortcutBtn from "./common/shortcutbtn/index.js";
+import Homepage from "./pages/homepage/index.js";
+import Detail from "./pages/detail/loadable.js";
+import Write from "./pages/write/index.js";
+
+import { HashRouter as Router, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <>
+          {/* common 文件夹里的组件们 */}
+          <Header /> {/* 最上方导航栏 */}
+          <ShortcutBtn /> {/* 右下角的两个按钮*/}
+
+          {/* pages 文件夹里的组件们 */}
+          <Route path="/" exact component={Homepage}></Route>
+          <Route path="/detail/:id" exact component={Detail}></Route>
+          <Route path="/write" exact component={Write}></Route>
+        </>
+      </Router>
     </div>
   );
 }
