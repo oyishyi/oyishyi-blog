@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux'
 import axios from "axios";
 
@@ -17,8 +17,6 @@ import {
 
 export const Favorites = (props) => {
 
-    const cancelTokenSource = axios.CancelToken.source();
-
     // 选择查看创建的收藏还是关注的收藏，懒得用 redux
     const [favoriteType, setFavoriteType] = useState("created");
     function handleChangeFavoriteType(e) {
@@ -29,15 +27,16 @@ export const Favorites = (props) => {
         }
     }
 
+    const cancelTokenSourceRef = useRef(axios.CancelToken.source());
+
     useEffect(() => {
-        if (props.collectionList === null) {
-            const func = props.getFavorites;
-            func(cancelTokenSource);
-        }
+        const cancelTokenSource = cancelTokenSourceRef.current;
+        const func = props.getFavorites;
+        func(cancelTokenSource);
         return (() => {
             cancelTokenSource.cancel("取消'收藏'的异步请求");
         });
-    }, [props.collectionList, props.getFavorites, cancelTokenSource]);
+    }, [props.getFavorites, cancelTokenSourceRef]);
 
     // 条件渲染
     let element;

@@ -88,8 +88,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         handleChangeCollectionType(e) {
+            // 改变版块前，要清空 collectionList 为 null，这样下个板块才会显示懒加载样式
             dispatch(actionCreators.getClearCollectionListAction());
-            dispatch(actionCreators.getChangeCollectionTypeAction(e.target.classList[0]));
+            dispatch(actionCreators.getChangeCollectionTypeAction(e.target.className));
         },
         clearCollectionList() {
             dispatch(actionCreators.getClearCollectionListAction());

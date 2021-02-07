@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 
 import axios from "axios";
@@ -25,17 +25,16 @@ import {
 
 export const Activities = (props) => {
 
-    const cancelTokenSource = axios.CancelToken.source();
+    const cancelTokenSourceRef = useRef(axios.CancelToken.source());
 
     useEffect(() => {
-        if (props.collectionList === null) {
-            const func = props.getActivities;
-            func(cancelTokenSource);
-        }
-        return(() => {
+        const cancelTokenSource = cancelTokenSourceRef.current;
+        const func = props.getActivities;
+        func(cancelTokenSource);
+        return (() => {
             cancelTokenSource.cancel("取消'动态'的异步请求");
         });
-    }, [props.collectionList, props.getActivities, cancelTokenSource]);
+    }, [props.getActivities, cancelTokenSourceRef]);
 
 
     // 条件渲染
@@ -92,21 +91,24 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         getActivities(cancelTokenSource) {
-            axios.get("/api/activities.json", {cancelToken: cancelTokenSource.token})
-                .then((res) => {
-                    if (res.data.success) {
-                        const action = getGetActivitiesAction(res.data.data);
-                        dispatch(action);
-                    } else {
-                        throw console.error("请求失败");;
-                    }
-                }).catch((error) => {
-                    if (axios.isCancel(error)) {
-                        console.log(error.message);
-                    } else {
-                        console.log(error);
-                    }
-                });
+            setTimeout(() => {
+                console.log("动态这里延时了1000ms 用于演示懒加载");
+                axios.get("/api/activities.json", { cancelToken: cancelTokenSource.token })
+                    .then((res) => {
+                        if (res.data.success) {
+                            const action = getGetActivitiesAction(res.data.data);
+                            dispatch(action);
+                        } else {
+                            throw console.error("请求失败");;
+                        }
+                    }).catch((error) => {
+                        if (axios.isCancel(error)) {
+                            console.log(error.message);
+                        } else {
+                            console.log(error);
+                        }
+                    });
+            }, 1000);
         }
     };
 }

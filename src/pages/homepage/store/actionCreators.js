@@ -9,23 +9,26 @@ import {
 } from "./actions.js"
 
 
+// 获取首页数据
 export const getGetInitialHomepageDataAction = (cancelTokenSource) => {
-    return (async (dispatch) => {
-        try {
-            const res = await axios.get("./api/home.json", {cancelToken: cancelTokenSource.token});
-            const action = {
-                type: GET_INITIAL_HOME_PAGE_DATA,
-                payload: fromJS(res.data)
-            }
-            dispatch(action);
-        } catch (error) {
-            if(axios.isCancel(error)) {
-                console.log(error.message);
-            } else {
-                console.log(error);
-            }
-        }
-
+    return ((dispatch) => {
+        setTimeout(() => {
+            console.log("首页数据这里延时了1000ms，用于演示懒加载");
+            axios.get("./api/home.json", { cancelToken: cancelTokenSource.token })
+                .then((res) => {
+                    const action = {
+                        type: GET_INITIAL_HOME_PAGE_DATA,
+                        payload: fromJS(res.data)
+                    }
+                    dispatch(action);
+                }).catch((error) => {
+                    if (axios.isCancel(error)) {
+                        console.log(error.message);
+                    } else {
+                        console.log(error);
+                    }
+                });
+        }, 1000);
     });
 }
 
@@ -36,9 +39,6 @@ export const getLoadMoreAction = () => {
     return (async (dispatch, getState) => {
         const wantedPage = getState().getIn(["Homepage", "articlePage"]) + 1;
         const res = await axios.get("./api/moreArticles.json?page=" + wantedPage);
-        for (let time = 0; time < 5000000; time++) {
-            var date = new Date();
-        }
         const data = res.data;
         const action = {
             type: LOAD_MORE_ARTICLE,

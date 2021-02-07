@@ -1,46 +1,67 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import ReactMarkdown from 'react-markdown/with-html'
 import gfm from "remark-gfm"
 
-import {
-    getGetArticleAction
-} from "../store/actionCreators.js";
 
 import {
     StyledMainArticle,
-    AuthorInfoArticle,
+    AuthorInfoInArticle,
     MainContent
 } from "../style.js";
 
 
 export const MainArticle = (props) => {
-    
-    useEffect(() => {
-        const func = props.getArticle;
-        func();
-    }, [props.getArticle]);
+
+    // 判断用户和文章作者是否同一人
+    // 没有数据库，暂时用名字来判断
+    let samePerson;
+    if (props.userInfo && props.articleMeta && (props.userInfo.get("name") === props.articleMeta.getIn(["author", "name"]))) {
+        samePerson = true;
+    } else {
+        samePerson = false;
+    }
+
+    // 由于 immutable 数据获取代码太长，这里全部存到变量里
+    let articleCreatedTime, articleReads;
+    let authorName, authorAvatar;
+    if (props.articleMeta) {
+        articleCreatedTime = props.articleMeta.get("articleCreatedTime");
+        articleReads = props.articleMeta.get("articleReads")
+        authorName = props.articleMeta.getIn(["author", "name"]);
+        authorAvatar = props.articleMeta.getIn(["author", "avatar"]);
+    }
 
     return (
         <StyledMainArticle>
-            <AuthorInfoArticle className="author-info">
-                <img src={props.userInfo.get("avatar")} alt="头像"/>
+            <AuthorInfoInArticle className="author-info">
+                <img src={authorAvatar} alt="头像" />
                 <div className="data-info">
-                    <div className="name">oyishyi</div>
+                    <div className="name">{authorName}</div>
                     <div className="meta-box">
-                        <time>{new Date().toDateString()}</time>
-                        <span className="view-counts">阅读 100</span>
-                        <span className="dot">·</span>
-                        <span className="edit-btn">编辑</span>
+                        <time>{articleCreatedTime}</time>
+                        <span className="view-counts">阅读 {articleReads}</span>
+                        {/* 只有文章用户才能编辑 */}
+                        {samePerson
+                            ? (
+                                <React.Fragment>
+                                    <span className="dot">·</span>
+                                    <span className="edit-btn">编辑</span>
+                                </React.Fragment>
+                            )
+                            : null
+                        }
                     </div>
                 </div>
-            </AuthorInfoArticle>
+            </AuthorInfoInArticle>
+
+            {/* markdown 被解析为 html */}
             <MainContent className="main-content">
                 <ReactMarkdown
-                source={props.article}
-                plugins={[gfm]}
-                allowDangerousHtml
+                    source={props.article}
+                    plugins={[gfm]}
+                    allowDangerousHtml
                 />
             </MainContent>
         </StyledMainArticle>
@@ -49,14 +70,13 @@ export const MainArticle = (props) => {
 
 const mapStateToProps = (state) => ({
     userInfo: state.getIn(["Header", "userInfo"]),
-    article: state.getIn(["Detail", "article"])
+    article: state.getIn(["Detail", "article"]),
+    articleMeta: state.getIn(["Detail", "articleMeta"])
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getArticle() {
-            dispatch(getGetArticleAction());
-        }
+        
     }
 }
 

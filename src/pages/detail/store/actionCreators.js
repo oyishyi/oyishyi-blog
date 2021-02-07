@@ -1,16 +1,40 @@
-import { GET_ARTICLE } from "./actions.js";
+import { fromJS } from "immutable";
 import axios from "axios";
 
-export const getGetArticleAction = (payload) => {
+import {
+    GET_ARTICLE,
+    GET_ARTICLE_META
+} from "./actions.js";
 
-    return (async (dispatch) => {
-        const res = await axios.get("../api/articles/article.md");
-        const action = {
-            type: GET_ARTICLE,
-            payload: {
-                article: res.data 
-            }
-        }
-        dispatch(action);
+export const getGetArticleAction = (cancelTokenSource) => {
+
+    return ((dispatch) => {
+        setTimeout(() => {
+            axios.get("../api/articleDetails/articleMeta.json", { cancelToken: cancelTokenSource.token })
+                .then((res) => {
+                    if (res.data.success) {
+                        const action = {
+                            type: GET_ARTICLE_META,
+                            payload: {
+                                articleMeta: fromJS(res.data.data)
+                            }
+                        }
+                        dispatch(action);
+                    }
+                })
+        }, 500);
+        setTimeout(() => {
+            axios.get("../api/articleDetails/article.md", { cancelToken: cancelTokenSource.token })
+                .then((res) => {
+                    const action = {
+                        type: GET_ARTICLE,
+                        payload: {
+                            article: res.data
+                        }
+                    }
+                    dispatch(action);
+                })
+        }, 1000);
+
     })
 }

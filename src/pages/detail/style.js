@@ -38,7 +38,7 @@ export const StyledMainArticle = styled.div`
 `
 
 // 文章部分的作者信息
-export const AuthorInfoArticle = styled.div`
+export const AuthorInfoInArticle = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 24px;

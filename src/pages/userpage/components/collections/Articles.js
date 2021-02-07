@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 
 import axios from "axios";
@@ -13,18 +13,16 @@ import Loading from "../../../../common/Loading/index.js";
 
 export const Articles = (props) => {
 
-    const cancelTokenSource = axios.CancelToken.source();
+    const cancelTokenSourceRef = useRef(axios.CancelToken.source());
 
     useEffect(() => {
-        // 每次点击 tab 的时候 collectionList 都会清空，触发 if 里的代码
-        if (props.collectionList === null) {
-            const func = props.getArticles;
-            func(cancelTokenSource);
-        }
+        const cancelTokenSource = cancelTokenSourceRef.current;
+        const func = props.getArticles;
+        func(cancelTokenSource);
         return (() => {
             cancelTokenSource.cancel("取消'文章'的异步请求");
         });
-    }, [props.collectionList, props.getArticles, cancelTokenSource]);
+    }, [props.getArticles, cancelTokenSourceRef]);
 
     // 条件渲染
     let element;
@@ -66,7 +64,7 @@ const mapDispatchToProps = (dispatch) => {
         // 异步获取文章
         getArticles(cancelTokenSource) {
             setTimeout(() => {
-                console.log("这里延时了500ms 用于演示懒加载");
+                console.log("文章这里延时了500ms 用于演示懒加载");
                 axios.get("/api/articles.json", { cancelToken: cancelTokenSource.token })
                     .then((res) => {
                         if (res.data.success) {

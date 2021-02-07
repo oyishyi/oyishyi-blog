@@ -1,5 +1,5 @@
 // 主页的文章组件
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import axios from "axios";
 
@@ -25,19 +25,19 @@ import {
 
 export const Articles = (props) => {
 
-    const cancelTokenSource = axios.CancelToken.source();
+    const cancelTokenSourceRef = useRef(axios.CancelToken.source());
 
     useEffect(() => {
-        if (props.articleList.size === 0) {
-            const func = props.getInitialHomepageData;
-            func(cancelTokenSource);
-        }
+        const cancelTokenSource = cancelTokenSourceRef.current;
+        const func = props.getInitialHomepageData;
+        func(cancelTokenSource);
         return (() => {
-            cancelTokenSource.cancel();
+            cancelTokenSource.cancel("中止首页文章的异步请求");
         });
-    }, [props.getInitialHomepageData, cancelTokenSource, props.articleList])
+    }, [props.getInitialHomepageData, cancelTokenSourceRef])
 
-    // 每次进入主页时清空列表
+    // 每次进入主页时清空列表，不然还保留着上次的文章记录
+    // 不过即使不要下面这段，数据依然会更新就是了，只是说更新前还会保持原来的数据
     useEffect(() => {
         const func = props.clearArticleList;
         func();
