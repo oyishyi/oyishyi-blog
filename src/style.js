@@ -1,8 +1,12 @@
 import { createGlobalStyle } from "styled-components";
 
-
-// 使用了 reset.css 重置浏览器默认样式
+// 全局样式
 export const GlobalStyle = createGlobalStyle`
+    /*总是显示滚动条*/
+    html {
+        overflow-y: scroll;
+    }
+    /* 使用了 reset.css 重置浏览器默认样式 */
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
     a, abbr, acronym, address, big, cite, code,

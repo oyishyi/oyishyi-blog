@@ -1,90 +1,105 @@
 // 主页的文章组件
-import React, { useRef } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import axios from "axios";
 
 import {
-    getLoadMoreAction
+    getGetInitialHomepageDataAction,
+    getLoadMoreAction,
+    getChangeLoadingStateAction,
+    getClearArticleListAction
 } from "../store/actionCreators.js";
+
+// 文章框框单独拿出来作为组件，个人主页里需要
+import Article from "./Article.js";
+
+import Loading from "../../../common/Loading/index.js";
+
 
 import {
     StyledArticles,
-    Article,
-    MoreArticles
+    MoreArticles,
+    MoreArticlesLoadingAnimation
 } from "../style.js";
 
 
-// 详情页面的网址前缀
-const HASH_DETAIL_URL = "/#/detail/"; // 使用 window.open 的话，要手动加 hashtag
-const DETAIL_URL = "/detail/";  // 使用 Link 的话，不用加，或者说不能加，不然就有两个 #，页面跳转错误
-
 export const Articles = (props) => {
 
-    const loadingRef = useRef(null);
+    const cancelTokenSource = axios.CancelToken.source();
 
-    function handleStopPropagation(e) {
-        e.stopPropagation();
+    useEffect(() => {
+        if (props.articleList.size === 0) {
+            const func = props.getInitialHomepageData;
+            func(cancelTokenSource);
+        }
+        return (() => {
+            cancelTokenSource.cancel();
+        });
+    }, [props.getInitialHomepageData, cancelTokenSource, props.articleList])
+
+    // 每次进入主页时清空列表
+    useEffect(() => {
+        const func = props.clearArticleList;
+        func();
+    }, [props.clearArticleList])
+
+
+    let element;
+    if (props.articleList.size === 0) {
+        element = (<Loading />);
+    } else {
+        element = (
+            <StyledArticles>
+                <ul>
+                    {props.articleList.map((article) => {
+                        return (
+                            <Article
+                                key={article.get("id")}
+                                id={article.get("id")}
+                                author={article.get("author")}
+                                time={article.get("time")}
+                                tag={article.get("tag")}
+                                title={article.get("title")}
+                                desc={article.get("desc")}
+                                titlePicUrl={article.get("titlePicUrl")}
+                            />
+                        );
+                    })}
+                </ul>
+                {/* 加载更多 */}
+                {props.loading
+                    ? (
+                        <MoreArticlesLoadingAnimation>
+                            <i className="iconfont">&#xe668;</i>
+                        </MoreArticlesLoadingAnimation>
+                    )
+                    : (<MoreArticles onClick={props.handleLoadMoreClick}>加载更多···</MoreArticles>)
+                }
+            </StyledArticles>
+        );
     }
 
-    return (
-        <StyledArticles>
-            <ul>
-                {props.articleList.map((article) => {
-                    return (
-                        <Article
-                            key={article.get("id")}
-                            onClick={() => { window.open(HASH_DETAIL_URL + article.get("id")); }}
-                        >
-                            <span className="text-info">
-                                <div className="author">
-                                    {article.get("author")} · {article.get("time")} · {article.get("tag")}
-                                </div>
-                                {/* 在 parents 元素上让 Link 的点击事件停止传播 */}
-                                <div className="title" onClick={handleStopPropagation}>
-                                    <Link
-                                        className="title"
-                                        to={DETAIL_URL + article.get("id")}
-                                        target="_blank"
-                                    >
-                                        {article.get("title")}
-                                    </Link>
-                                </div>
-                                <p>{article.get("desc")}</p>
-                                {/* 点击 button 的时候不需要进入网页 */}
-                                <span className="social" onClick={handleStopPropagation}>
-                                    <button>
-                                        <i className="iconfont">&#xe60c;</i>
-                                        <span>点赞</span>
-                                    </button>
-                                    <button>
-                                        <i className="iconfont">&#xe63a;</i>
-                                        <span>评论</span>
-                                    </button>
-                                    <button><i className="iconfont">&#xe6d1;</i></button>
-                                </span>
-                            </span>
-                            <img src={article.get("titlePicUrl")} alt="标题图" />
-                        </Article>
-                    )
-                })}
-            </ul>
-
-            <MoreArticles onClick={() => props.handleLoadMoreClick(loadingRef)} ref={loadingRef}>加载更多···</MoreArticles>
-
-        </StyledArticles>
-    )
+    return element;
 }
 
 const mapStateToProps = (state) => ({
-    articleList: state.getIn(["Homepage", "articleList"])
+    articleList: state.getIn(["Homepage", "articleList"]),
+    loading: state.getIn(["Homepage", "loading"]),
 })
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        handleLoadMoreClick(loadingRef) {
-            // const element = loadingRef.current;
-            // element.style.color = "red";
+        // 获取主页起始所需所有数据
+        getInitialHomepageData(cancelTokenSource) {
+            const action = getGetInitialHomepageDataAction(cancelTokenSource);
+            dispatch(action)
+        },
+        handleLoadMoreClick() {
+            dispatch(getChangeLoadingStateAction(true));
             dispatch(getLoadMoreAction());
+        },
+        clearArticleList() {
+            dispatch(getClearArticleListAction());
         }
     });
 }

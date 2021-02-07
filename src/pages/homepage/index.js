@@ -1,9 +1,5 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { connect } from "react-redux";
-
-import {
-    getGetInitialHomepageDataAction
-} from "./store/actionCreators.js";
 
 // 导入样式
 import Topics from "./components/Topics.js";
@@ -20,10 +16,6 @@ import {
 
 
 export const Homepage = (props) => {
-    useEffect(() => {
-        const func = props.getInitialHomepageData;
-        func();
-    }, [props.getInitialHomepageData])
 
     return (
         <StyledHomepage className="Homepage-whole">
@@ -50,11 +42,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // 获取主页起始所需所有数据
-        getInitialHomepageData() {
-            const action = getGetInitialHomepageDataAction();
-            dispatch(action)
-        }
+        
     }
 }
 

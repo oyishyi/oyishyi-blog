@@ -9,10 +9,14 @@ const initialState = fromJS({
     page: 0,
     totalPage: 0,
     showLoginBtn: false,
-    loginStatus: false,
-    showAvatarBox: false,
     showHeader: true,
-    userInfo: {}
+    loginStatus: true,
+    showAvatarBox: false,
+    userInfo: {
+        id: 1,
+        avatar: "../img/homepage.png",
+        name: "oyishyi"
+    }
 })
 
 export default (state = initialState, { type, payload }) => {

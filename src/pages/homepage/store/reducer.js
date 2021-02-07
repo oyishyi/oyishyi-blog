@@ -2,7 +2,9 @@ import { fromJS } from "immutable"
 
 import { 
     GET_INITIAL_HOME_PAGE_DATA,
-    LOAD_MORE_ARTICLE
+    LOAD_MORE_ARTICLE,
+    CHANGE_LOADING_STATE,
+    CLEAR_ARTICLE_LIST
 } from "./actions.js"
 
 const initialState = fromJS({
@@ -10,8 +12,8 @@ const initialState = fromJS({
     topicList: [],
     articleList: [],
     articlePage: 0,
-    loadingState: false,
-    recommendedAuthorList: []
+    loading: false,
+    recommendedAuthorList: [],
 })
 
 export default (state = initialState, { type, payload }) => {
@@ -29,6 +31,10 @@ export default (state = initialState, { type, payload }) => {
                 articleList: currentArticleList.concat(payload.data),
                 articlePage: payload.page
             });
+        case CHANGE_LOADING_STATE:
+            return state.set("loading", payload.loading);
+        case CLEAR_ARTICLE_LIST:
+            return state.set("articleList", fromJS([]));
         default:
             return state
     }

@@ -105,11 +105,6 @@ export const Header = (props) => {
         }
     }
 
-    // 停止事件继续冒泡
-    function handleStopPropagation(e) {
-        e.stopPropagation();
-    }
-
     return (
         <React.Fragment>
             <CSSTransition
@@ -138,30 +133,39 @@ export const Header = (props) => {
                                 // 如果登录，则显示头像，消息等功能按钮
                                 <React.Fragment>
                                     {/* 因为外层元素绑定了关闭扩展栏的时间，这里要阻止点击事件冒泡，以免关闭扩展栏 */}
-                                    <NavAddition className="avatar" onClick={handleStopPropagation}>
+                                    <NavAddition className="avatar">
                                         <img src={props.userInfo.get("avatar")} alt="头像" onClick={props.handleAvatarBtnToggle} />
                                         {/* 头像扩展栏 */}
                                         {props.showAvatarBox
                                             ? (
                                                 <AvatarItems className="avatar-function">
                                                     <AvatarItem>
-                                                        <div><i className="iconfont">&#xe652;</i>写文章</div>
-                                                        <div><i className="iconfont">&#xe643;</i>草稿</div>
+                                                        <Link to="/">
+                                                            <i className="iconfont">&#xe652;</i>
+                                                            写文章
+                                                        </Link>
+                                                        <Link to="/">
+                                                            <i className="iconfont">&#xe643;</i>
+                                                            草稿
+                                                        </Link>
                                                     </AvatarItem>
                                                     <AvatarItem>
-                                                        <div><i className="iconfont">&#xe603;</i>我的主页</div>
-                                                        <div><i className="iconfont">&#xe60c;</i>我赞过的</div>
-                                                        <div><i className="iconfont">&#xe630;</i>我的收藏</div>
+                                                        <Link to={"/userpage/" + props.userInfo.get("id")}>
+                                                            <i className="iconfont">&#xe603;</i>
+                                                            我的主页
+                                                        </Link>
+                                                        <Link to="/"><i className="iconfont">&#xe60c;</i>我赞过的</Link>
+                                                        <Link to="/"><i className="iconfont">&#xe630;</i>我的收藏</Link>
                                                     </AvatarItem>
                                                     <AvatarItem>
-                                                        <div><i className="iconfont">&#xe654;</i>设置</div>
-                                                        <div><i className="iconfont">&#xe622;</i>关于</div>
+                                                        <Link to="/"><i className="iconfont">&#xe654;</i>设置</Link>
+                                                        <Link to="/"><i className="iconfont">&#xe622;</i>关于</Link>
                                                     </AvatarItem>
                                                     <AvatarItem>
-                                                        <div onClick={props.handleLogoutBtn}>
+                                                        <Link to="/" onClick={props.handleLogoutBtn}>
                                                             <i className="iconfont">&#xe621;</i>
                                                             登出
-                                                        </div>
+                                                        </Link>
                                                     </AvatarItem>
                                                 </AvatarItems>
                                             )
@@ -308,7 +312,7 @@ const mapDispatchToProps = (dispatch) => {
             }
 
             lastScroll = scrollTop; // 闭包
-            
+
             if (!up && scrollTop > 500) {
                 const action = actionCreators.getChangeShowHeaderAction(false);
                 dispatch(action);

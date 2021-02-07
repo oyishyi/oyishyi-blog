@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 // 整个主页样式
 export const StyledHomepage = styled.main`
     background-color: #f4f5f5;
+    min-height: calc(100vh - 81px);
     /* 主页的主体部分 */
     & > .Homepage-main {
         width: 960px;
@@ -73,7 +74,7 @@ export const StyledArticles = styled.section`
     /* background-color: #fff; */
 `;
 // 首页文章列表 item
-export const Article = styled.li`
+export const StyledArticle = styled.li`
     position: relative;
     box-sizing: border-box;
 
@@ -152,6 +153,7 @@ export const Article = styled.li`
         height: 70px;
     }
 `;
+
 // 加载更多
 export const MoreArticles = styled.div`
     text-align: center;
@@ -163,6 +165,32 @@ export const MoreArticles = styled.div`
     cursor: pointer;
     &:hover {
         background-color: rgba(0,0,0,0.5);
+    }
+`;
+// 加载更多的 loading 动画
+const LoadingAnimation = keyframes`
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+`
+// 加载更多的 loading 动画组件
+export const MoreArticlesLoadingAnimation = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.1);
+    & > .iconfont {
+        font-size: 20px;
+        display: block; /* 内联元素无法 transform */
+        -webkit-animation: 0.5s linear infinite ${LoadingAnimation};
+        animation: 1s ease infinite ${LoadingAnimation};
     }
 `;
 

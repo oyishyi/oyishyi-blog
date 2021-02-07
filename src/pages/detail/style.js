@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const StyledDetail = styled.main`
     padding-top: 20px;
     background-color: #f4f5f5;
-
+    min-height: calc(100vh - 81px);
     & > .detail-main {
         width: 960px;
         margin: 0 auto;
@@ -21,6 +21,16 @@ export const StyledDetail = styled.main`
 export const DetailLeft = styled.div`
     
 `
+
+// 页面懒加载的样式
+export const StyledLazyLoading = styled.div`
+    width: 960px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 3fr 1fr;
+`;
 
 export const StyledMainArticle = styled.div`
     padding: 24px 24px 0 24px;

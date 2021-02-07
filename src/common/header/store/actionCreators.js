@@ -61,7 +61,8 @@ export const getLoginAction = (loginAction) => {
                             loginStatus: true,
                             userInfo: fromJS({
                                 id: data.data.id,
-                                avatar: data.data.avatar
+                                avatar: data.data.avatar,
+                                name: data.data.name
                             })
                         }
                     }
@@ -88,12 +89,19 @@ export const getLoginAction = (loginAction) => {
 }
 
 // 开启或关闭头像扩展栏
-export const getChangeShowAvatarBox = (showAvatarBox) => ({
-    type: actionConstants.CHANGE_SHOW_AVATAR_BOX,
-    payload: {
-        showAvatarBox
+export const getChangeShowAvatarBox = (showAvatarBox) => {
+    return (dispatch, getState) => {
+        if (getState().getIn(["Header", "showAvatarBox"]) !== showAvatarBox) {
+            const action = {
+                type: actionConstants.CHANGE_SHOW_AVATAR_BOX,
+                payload: {
+                    showAvatarBox
+                }
+            }
+            dispatch(action)
+        }
     }
-})
+}
 
 // 开启关闭导航栏状态
 export const getChangeShowHeaderAction = (showHeader) => {

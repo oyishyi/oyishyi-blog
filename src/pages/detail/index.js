@@ -29,7 +29,7 @@ export const Detail = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-
+    
 })
 
 const mapDispatchToProps = (dispatch) => {

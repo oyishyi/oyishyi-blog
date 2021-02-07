@@ -329,13 +329,13 @@ export const AvatarItem = styled.li`
     padding: 12px 0;
     border-bottom: 1px solid rgba(0,0,0,.04);
     /* 每行按钮 */
-    & > div {
+    & > a {
         line-height: normal;
         font-size: 15.6px;
-
         display: flex;
         padding: 6px 12px;
         color: #71777c;
+        text-decoration: none;
         cursor: pointer;
         & > .iconfont {
             font-size: 18px;
