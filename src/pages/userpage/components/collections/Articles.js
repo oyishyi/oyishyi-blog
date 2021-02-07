@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import axios from "axios";
@@ -13,16 +13,19 @@ import Loading from "../../../../common/Loading/index.js";
 
 export const Articles = (props) => {
 
-    const cancelTokenSourceRef = useRef(axios.CancelToken.source());
-
+    // 这里和主页、文章不一样，那里组件存在的时候只会获取一次。重新获取同时意味着组件卸载和装载。
+    // 但这里如果重新点击相同版块，就会发生组件不卸载的情况下再次获取异步数据。
+    // 而重新点击会复用 source，但是source 只能使用一次，因此每次都要重新生成
+    const cancelTokenSource = axios.CancelToken.source();
     useEffect(() => {
-        const cancelTokenSource = cancelTokenSourceRef.current;
-        const func = props.getArticles;
-        func(cancelTokenSource);
+        if (!props.collectionList) {
+            const func = props.getArticles;
+            func(cancelTokenSource);
+        }
         return (() => {
             cancelTokenSource.cancel("取消'文章'的异步请求");
         });
-    }, [props.getArticles, cancelTokenSourceRef]);
+    }, [props.collectionList, props.getArticles, cancelTokenSource]);
 
     // 条件渲染
     let element;
@@ -67,6 +70,7 @@ const mapDispatchToProps = (dispatch) => {
                 console.log("文章这里延时了500ms 用于演示懒加载");
                 axios.get("/api/articles.json", { cancelToken: cancelTokenSource.token })
                     .then((res) => {
+                        console.log(2);
                         if (res.data.success) {
                             const action = getGetArticlesAction(res.data.data);
                             dispatch(action);
