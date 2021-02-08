@@ -35,12 +35,15 @@ const mapDispatchToProps = (dispatch) => {
         handleCloseBtn() {
             const action = actionCreators.getChangeShowLoginBtn(false);
             dispatch(action);
+            // 关闭后显示滚动条
             document.documentElement.style.overflowY = "scroll";
         },
         handleLoginBtn(e) {
             e.preventDefault();
             const action = actionCreators.getLoginAction(true);
             dispatch(action);
+            // 登录后显示滚动条
+            document.documentElement.style.overflowY = "scroll";
         }
     }
 }

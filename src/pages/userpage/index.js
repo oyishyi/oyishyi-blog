@@ -12,23 +12,31 @@ import {
 } from "./style.js";
 
 export const UserPage = (props) => {
+    // 打印用户的 ID
     console.log(props.match.params.id);
-    return (
-        <StyledUserPage>
 
-            <div className="user-page-main">
-                <UserPageLeft>
-                    <UserData />
-                    <UserCollection />
-                </UserPageLeft>
+    let element;
+    if (!props.userInfo) {
+        element = (
+            <div>获取用户信息中，如果长时间没有出现数据请刷新</div>
+        );
+    } else {
+        element = (
+            <StyledUserPage>
+                <div className="user-page-main">
+                    <UserPageLeft>
+                        <UserData />
+                        <UserCollection />
+                    </UserPageLeft>
 
-                {/* 页面右边的因为要根据导航栏位置重新渲染，单独提出为一个组件
-                如果在这里重新渲染的话，整个页面都要渲染，那样太耗性能了 */}
-                <UserPageRight />
-            </div>
-
-        </StyledUserPage>
-    )
+                    {/* 页面右边的因为要根据导航栏位置重新渲染，单独提出为一个组件。
+                        如果在这里重新渲染的话，整个页面都要渲染，那样太耗性能了 */}
+                    <UserPageRight />
+                </div>
+            </StyledUserPage>
+        );
+    }
+    return element;
 }
 
 const mapStateToProps = (state, props) => ({

@@ -45,6 +45,11 @@ function throttle(func, delay) {
 
 export const Header = (props) => {
 
+    useEffect(() => {
+        const func = props.handleAutoLogin;
+        func()
+    }, [props.handleAutoLogin])
+
     // 导航栏的滚动事件
     useEffect(() => {
         const func = throttle(props.handleShowHeader, 100);
@@ -165,10 +170,10 @@ export const Header = (props) => {
                                                         <Link to="/"><i className="iconfont">&#xe622;</i>关于</Link>
                                                     </AvatarItem>
                                                     <AvatarItem>
-                                                        <Link onClick={props.handleLogoutBtn}>
+                                                        <span onClick={props.handleLogoutBtn}>
                                                             <i className="iconfont">&#xe621;</i>
                                                             登出
-                                                        </Link>
+                                                        </span>
                                                     </AvatarItem>
                                                 </AvatarItems>
                                             )
@@ -254,6 +259,14 @@ const mapDispatchToProps = (dispatch) => {
     let lastScroll = 0; // 导航栏滚动函数需要
 
     return {
+        // 广告的鼠标事件
+        handleMouseEnter() {
+            dispatch(actionCreators.getChangeMouseEnterStateOnSearchHintAction(true));
+        },
+        handleMouseLeave() {
+            dispatch(actionCreators.getChangeMouseEnterStateOnSearchHintAction(false));
+        },
+        // 搜索框动画
         handleFocus(e) {
             e.target.placeholder = "搜索项目/像素画";
             dispatch(actionCreators.getChangeFocusStateOnSearchBarAction(true));
@@ -263,15 +276,11 @@ const mapDispatchToProps = (dispatch) => {
             const action = actionCreators.getChangeFocusStateOnSearchBarAction(false);
             dispatch(action);
         },
+        // 异步获取搜索框的提示列表
         getAdvisedTagList() {
             dispatch(actionCreators.getGetAdvisedTagListAction());
         },
-        handleMouseEnter() {
-            dispatch(actionCreators.getChangeMouseEnterStateOnSearchHintAction(true));
-        },
-        handleMouseLeave() {
-            dispatch(actionCreators.getChangeMouseEnterStateOnSearchHintAction(false));
-        },
+        // 搜索框的提示列表的“换一批”动画以及功能
         handleChangePage(spin) { // 已经 current 过了
             let deg = spin.style.transform.replace(/[^0-9]/ig, "");
             if (deg === "") {
@@ -281,6 +290,10 @@ const mapDispatchToProps = (dispatch) => {
                 spin.style.transform = `rotate(${deg + 360}deg)`;
             }
             dispatch(actionCreators.getChangePageAction());
+        },
+        // 自动登录
+        handleAutoLogin() {
+            dispatch(actionCreators.getAutoLoginAction());
         },
         // 显示登录组件，隐藏滚动条
         handleLoginBtn(loginRef) {

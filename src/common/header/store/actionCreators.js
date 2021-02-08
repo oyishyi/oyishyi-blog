@@ -1,13 +1,14 @@
 import * as actionConstants from "./actions.js";
 import axios from "axios";
 import { fromJS } from "immutable";
-
+import localforage from "localforage";
 
 export const getChangeFocusStateOnSearchBarAction = (payload) => ({
     type: actionConstants.CHANGE_FOCUS_STATE_ON_SEARCH_BAR,
     payload
 })
 
+// 异步获取搜索框的提示列表
 export const getGetAdvisedTagListAction = () => {
     return (async (dispatch) => {
         try {
@@ -26,23 +27,43 @@ export const getGetAdvisedTagListAction = () => {
         }
     })
 }
-
-export const getChangeMouseEnterStateOnSearchHintAction = (payload) => ({
-    type: actionConstants.CHANGE_MOUSE_ENTER_STATE_ON_SEARCH_HINT,
-    payload
-})
-
+// 搜索框的提示列表的“换一批”功能
 export const getChangePageAction = (payload) => ({
     type: actionConstants.CHANGE_PAGE,
     payload // undefined，仅为了保持结构
 })
 
+export const getChangeMouseEnterStateOnSearchHintAction = (payload) => ({
+    type: actionConstants.CHANGE_MOUSE_ENTER_STATE_ON_SEARCH_HINT,
+    payload
+})
+// 点击登录显示登录组件
 export const getChangeShowLoginBtn = (showLoginBtn) => ({
     type: actionConstants.CHANGE_SHOW_LOGIN_BUTTON,
     payload: {
         showLoginBtn
     }
 })
+
+
+// 页面刚加载的时候，使用 localforage 自动登录
+export const getAutoLoginAction = () => {
+    return (async (dispatch) => {
+        const storageUserInfo = await localforage.getItem("userInfo");
+        if (storageUserInfo) {
+            console.log("已有用户信息，自动登录");
+            const action = {
+                type: actionConstants.LOGIN,
+                payload: {
+                    loginStatus: true,
+                    // localforage 不能存储 immutable 数据
+                    userInfo: fromJS(storageUserInfo)
+                }
+            }
+            dispatch(action);
+        }
+    })
+}
 
 // 登录或者注销行为
 export const getLoginAction = (loginAction) => {
@@ -52,28 +73,47 @@ export const getLoginAction = (loginAction) => {
             if (loginAction === true) {
                 const res = await axios.get("../api/login.json");
                 const data = res.data;
-                // 如果是登录行为，并且登录成功，则关闭登录组件
-                // 登录失败则不关闭登录组件
+
+                // 登录成功
                 if (data.success === true) {
+
+                    // localforage 不能存储 immutable 数据
+                    const userInfo = {
+                        id: data.data.id,
+                        avatar: data.data.avatar,
+                        name: data.data.name
+                    };
+
                     const action = {
                         type: actionConstants.LOGIN,
                         payload: {
                             loginStatus: true,
-                            userInfo: fromJS({
-                                id: data.data.id,
-                                avatar: data.data.avatar,
-                                name: data.data.name
-                            })
+                            userInfo: fromJS(userInfo)
                         }
                     }
                     dispatch(action);
+
+                    // 登陆成功后设置 localForage
+                    console.log("设置 localforage 的用户信息");
+                    await localforage.setItem("userInfo", userInfo);
+
+                    // 登录成功，则关闭登录组件
                     dispatch(getChangeShowLoginBtn(false));
-                    // 关闭登录组件后还要把滚动条回复显示
-                    document.documentElement.style.overflowY = "scroll";
+
+                    // 登录后更新页面
+                    // window.location.reload();
+
+                // 登录失败
+                } else {
+                    // 登录失败则不关闭登录组件
+                    console.log("登录失败");
                 }
 
+            // 注销行为
             } else {
-                // 注销行为
+                // 同时清除 localforage
+                console.log("清除 localforage 的用户信息");
+                await localforage.removeItem("userInfo");
                 const action = {
                     type: actionConstants.LOGIN,
                     payload: {
