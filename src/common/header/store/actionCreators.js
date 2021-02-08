@@ -69,7 +69,7 @@ export const getLoginAction = (loginAction) => {
                     dispatch(action);
                     dispatch(getChangeShowLoginBtn(false));
                     // 关闭登录组件后还要把滚动条回复显示
-                    document.body.style.overflowY = "scroll";
+                    document.documentElement.style.overflowY = "scroll";
                 }
 
             } else {
@@ -77,7 +77,8 @@ export const getLoginAction = (loginAction) => {
                 const action = {
                     type: actionConstants.LOGIN,
                     payload: {
-                        loginStatus: false
+                        loginStatus: false,
+                        userInfo: null
                     }
                 }
                 dispatch(action);

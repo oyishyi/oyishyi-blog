@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
         handleCloseBtn() {
             const action = actionCreators.getChangeShowLoginBtn(false);
             dispatch(action);
-            document.body.style.overflowY = "scroll";
+            document.documentElement.style.overflowY = "scroll";
         },
         handleLoginBtn(e) {
             e.preventDefault();

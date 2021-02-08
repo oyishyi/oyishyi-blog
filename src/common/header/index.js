@@ -105,6 +105,9 @@ export const Header = (props) => {
         }
     }
 
+    // 获取当前网址
+    // const currentURL = useLocation();
+
     return (
         <React.Fragment>
             <CSSTransition
@@ -162,7 +165,7 @@ export const Header = (props) => {
                                                         <Link to="/"><i className="iconfont">&#xe622;</i>关于</Link>
                                                     </AvatarItem>
                                                     <AvatarItem>
-                                                        <Link to="/" onClick={props.handleLogoutBtn}>
+                                                        <Link onClick={props.handleLogoutBtn}>
                                                             <i className="iconfont">&#xe621;</i>
                                                             登出
                                                         </Link>
@@ -282,13 +285,15 @@ const mapDispatchToProps = (dispatch) => {
         // 显示登录组件，隐藏滚动条
         handleLoginBtn(loginRef) {
             dispatch(actionCreators.getChangeShowLoginBtn(true));
-            document.body.style.overflowY = "hidden";
+            document.documentElement.style.overflowY = "hidden";
         },
         // 注销
         handleLogoutBtn() {
             dispatch(actionCreators.getLoginAction(false));
-            dispatch(actionCreators.getChangeShowAvatarBox()); // 注销的时候也要把扩展栏一同关闭
-            // 不然下次登录扩展栏还保持开启状态
+            dispatch(actionCreators.getChangeShowAvatarBox());  /* 注销的时候也要把扩展栏一同关闭 
+                                                                   不然下次登录扩展栏还保持开启状态 */
+            // 注销的时候更新页面
+            window.location.reload();
         },
         // 开启或关闭头像扩展栏
         handleAvatarBtnToggle(e) {

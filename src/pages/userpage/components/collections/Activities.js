@@ -26,7 +26,7 @@ import {
 export const Activities = (props) => {
 
     // 这里和主页、文章不一样，那里组件存在的时候只会获取一次。重新获取同时意味着组件卸载和装载。
-    // 但这里如果重新点击相同版块，就会发生组件不卸载的情况下再次获取异步数据。
+    // 但这里如果重新点击相同版块，就会发生在组件不卸载的情况下再次获取异步数据的情况。
     // 而重新点击会复用 source，但是source 只能使用一次，因此每次都要重新生成
     const cancelTokenSource = axios.CancelToken.source();
     useEffect(() => {
@@ -102,7 +102,7 @@ const mapDispatchToProps = (dispatch) => {
                             const action = getGetActivitiesAction(res.data.data);
                             dispatch(action);
                         } else {
-                            throw console.error("请求失败");;
+                            throw console.error("服务器错误");
                         }
                     }).catch((error) => {
                         if (axios.isCancel(error)) {
