@@ -19,7 +19,7 @@ export const StyledDetail = styled.main`
  * 左边栏的样式
  **************************************************************************************************/
 export const DetailLeft = styled.div`
-    
+    width: 100%;
 `
 
 // 页面懒加载的样式
@@ -73,11 +73,11 @@ export const AuthorInfoInArticle = styled.div`
     }
 `
 
-// maekdown 转化后的 html 文章的样式
+// markdown 转化后的 html 文章的样式
 export const MainContent = styled.article`
     line-height: 20px;
     color: #333;
-
+    width: 100%;
     & img {
         display: block;
         width: 80%;
@@ -107,6 +107,16 @@ export const MainContent = styled.article`
     & ol > li {
         list-style: decimal;
     }
+    /* inline-code */
+    /* 块代码有第三方库高亮无需担心 */
+    & > p > code{
+        color: #007fff;
+    }
+    /* & > pre {
+        user-modify: read-write;
+        -webkit-user-modify: read-write;
+        -moz-user-modify: read-write;
+    } */
 `;
 
 

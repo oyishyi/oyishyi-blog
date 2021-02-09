@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from "react-router-dom";
 
 import UserData from "./components/UserData.js";
 import UserCollection from "./components/UserCollection.js";
@@ -12,8 +11,6 @@ import {
 } from "./style.js";
 
 export const UserPage = (props) => {
-    // 打印用户的 ID
-    console.log(props.match.params.id);
 
     let element;
     if (!props.userInfo) {
@@ -47,4 +44,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserPage))
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage)

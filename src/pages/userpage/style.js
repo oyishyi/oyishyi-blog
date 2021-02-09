@@ -97,7 +97,8 @@ export const CollectionNav = styled.nav`
     border-bottom: 1px solid #ebebeb;
     background-color: #fff;
     /* 每个区块 */
-    & > div {
+    & > a {
+        display: block;
         width: 32px;
         font-size: 16px;
         font-weight: 500;
@@ -109,17 +110,17 @@ export const CollectionNav = styled.nav`
         &:hover {
             opacity: 0.7;
         }
-    }
-    /* 选中的区块为蓝色 */
-    & > div.${props => props.className} {
-        color: #007fff;
+        &.active {
+            color: #007fff;
+        }
     }
 `;
 // 导航栏的标识选中 tab 的蓝色滑块
 export const BlueSlide = styled.div`
     position: absolute; bottom: 0px;
     left: ${props => props.position};
-    width: 32px; /* 因为还有继承的 padding */
+    padding: 20px 30px;
+    width: 32px;
     box-shadow: inset 0 -2px 0px #007fff;
     z-index: 0;
     transition: left 0.2s;

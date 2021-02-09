@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 
 import ReactMarkdown from 'react-markdown/with-html'
 import gfm from "remark-gfm"
-
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import { a11yDark as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { java, python, javascript, css, jsx } from "react-syntax-highlighter/dist/esm/languages/prism";
 
 import {
     StyledMainArticle,
@@ -33,6 +35,27 @@ export const MainArticle = (props) => {
         authorAvatar = props.articleMeta.getIn(["author", "avatar"]);
     }
 
+    // markdown 代码高亮
+    SyntaxHighlighter.registerLanguage("javascript", javascript);
+    SyntaxHighlighter.registerLanguage("css", css);
+    SyntaxHighlighter.registerLanguage("jsx", jsx);
+    SyntaxHighlighter.registerLanguage("python", python);
+    SyntaxHighlighter.registerLanguage("java", java);
+    const renderers = {
+        code: (({ language, value }) => {
+            return (
+                <SyntaxHighlighter
+                    style={codeStyle}
+                    language = {language}
+                    children={value}
+                    showLineNumbers={true}
+                    wrapLongLines={true}
+                />
+            );
+        })
+    }
+
+
     return (
         <StyledMainArticle>
             <AuthorInfoInArticle className="author-info">
@@ -60,7 +83,9 @@ export const MainArticle = (props) => {
             <MainContent className="main-content">
                 <ReactMarkdown
                     source={props.article}
+                    // gfm 可以帮助识别 github flavored markdown 语法的删除，列表，表格，网址
                     plugins={[gfm]}
+                    renderers={renderers}
                     allowDangerousHtml
                 />
             </MainContent>
@@ -76,7 +101,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        
+
     }
 }
 

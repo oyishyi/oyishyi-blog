@@ -24,7 +24,7 @@ function App() {
           <Route path="/" exact component={Homepage}></Route>
           <Route path="/detail/:id" exact component={Detail}></Route>
           <Route path="/write" exact component={Write}></Route>
-          <Route path="/userpage/:id" exact component={UserPage}></Route>
+          <Route path="/userpage/:id" component={UserPage}></Route>
         </>
       </Router>
     </div>

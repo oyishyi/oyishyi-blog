@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { CSSTransition } from "react-transition-group";
 
+import { getClearCollectionListAction } from "../../pages/userpage/store/actioncreators.js";
+
+
 import Login from "../login/index.js"; // 登录组件
 
 // header 组件里的所有样式(不包括登录组件)
@@ -158,7 +161,10 @@ export const Header = (props) => {
                                                         </Link>
                                                     </AvatarItem>
                                                     <AvatarItem>
-                                                        <Link to={"/userpage/" + props.userInfo.get("id")}>
+                                                        <Link
+                                                            to={"/userpage/" + props.userInfo.get("id")}
+                                                            onClick={props.clearCollectionList}
+                                                        >
                                                             <i className="iconfont">&#xe603;</i>
                                                             我的主页
                                                         </Link>
@@ -338,6 +344,9 @@ const mapDispatchToProps = (dispatch) => {
                 const action = actionCreators.getChangeShowHeaderAction(true);
                 dispatch(action);
             }
+        },
+        clearCollectionList() {
+            dispatch(getClearCollectionListAction());
         }
     }
 }

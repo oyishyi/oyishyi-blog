@@ -1,13 +1,6 @@
 import { fromJS } from "immutable";
 import * as actionConstants from "./actions.js";
 
-// 改变显示的组件
-export const getChangeCollectionTypeAction = (collectionType) => ({
-    type: actionConstants.CHANGE_COLLECTION_TYPE,
-    payload: {
-        collectionType
-    }
-})
 
 // 清空 collectionList
 export const getClearCollectionListAction = () => ({

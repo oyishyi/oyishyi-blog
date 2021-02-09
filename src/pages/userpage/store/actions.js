@@ -1,4 +1,3 @@
-export const CHANGE_COLLECTION_TYPE = "UserPage/change collection type";
 export const GET_ACTIVITIES = "UserPage/get activities";
 export const GET_ARTICLES = "UserPage/get articles";
 export const GET_FAVORITES = "UserPage/get favorites";
