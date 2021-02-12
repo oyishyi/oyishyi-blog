@@ -1,3 +1,4 @@
+// 点击登录按钮后出现的组件
 import React from 'react'
 import { connect } from 'react-redux'
 

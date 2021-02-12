@@ -11,11 +11,10 @@ import {
 } from "./style.js";
 
 export const UserPage = (props) => {
-
     let element;
-    if (!props.userInfo) {
+    if (!props.loginStatus) {
         element = (
-            <div>获取用户信息中，如果长时间没有出现数据请刷新</div>
+            <div>您还没有登录</div>
         );
     } else {
         element = (
@@ -37,7 +36,7 @@ export const UserPage = (props) => {
 }
 
 const mapStateToProps = (state, props) => ({
-    userInfo: state.getIn(["Header", "userInfo"])
+    loginStatus: state.getIn(["Header", "loginStatus"])
 })
 
 const mapDispatchToProps = {

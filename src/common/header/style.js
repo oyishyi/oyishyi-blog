@@ -4,7 +4,7 @@ import logo from "../../static/logo/logo64.png"
 // Login组件的样式和组件代码在同一个文件夹里
 
 // 导航栏整体样式
-export const StyledHeader = styled.header`
+export const StyledNormalHeader = styled.header`
 
     position: sticky; top: 0px; left: 0;
 

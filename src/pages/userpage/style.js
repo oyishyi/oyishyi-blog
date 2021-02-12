@@ -78,11 +78,12 @@ export const StyledUserData = styled.section`
         position: absolute; bottom: 30px; right: 30px; /* padding 值为 30px */
         font-size: 16px;
         font-weight: 500;
-        /* line-height: 32px; */
         padding: 9px 7px;
         border: 1px solid #3780f7;
         border-radius: 4px;
+        text-decoration: none;
         color: #3780f7;
+        cursor: pointer;
     }
 `;
 

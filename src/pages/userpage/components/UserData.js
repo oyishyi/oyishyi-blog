@@ -1,6 +1,7 @@
 // 左上角的个人信息
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link, useParams } from "react-router-dom";
 
 import {
     StyledUserData
@@ -8,6 +9,7 @@ import {
 
 
 export const UserData = (props) => {
+    const params = useParams();
     return (
         <StyledUserData>
             <img src={props.userInfo.get("avatar")} alt="头像" />
@@ -24,9 +26,12 @@ export const UserData = (props) => {
                     头像自己画的
                 </div>
             </div>
-            <div className="edit-profile">
+            <Link
+                className="edit-profile"
+                to={"/setting/" + params.id + "/profile"}
+            >
                 编辑个人资料
-            </div>
+            </Link>
         </StyledUserData>
     )
 }

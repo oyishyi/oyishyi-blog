@@ -14,17 +14,17 @@ import store from "./store/index.js";
 import { Provider } from "react-redux";
 
 ReactDOM.render(
-  <React.StrictMode>{/*react 的严格模式，可以检测一些弃用的函数*/}
-                    {/*webpack 自带原生JS的严格模式，因此不用加上*/}
-                    
-    <GlobalStyle /> {/* reset.css */}
-    <IconFont /> {/* 阿里图标字体 */}
+    <React.StrictMode>{/*react 的严格模式，可以检测一些弃用的函数*/}
+        {/*webpack 自带原生JS的严格模式，因此不用加上*/}
 
-    <Provider store={store}>
-      <App />
-    </Provider>
+        <GlobalStyle /> {/* reset.css */}
+        <IconFont /> {/* 阿里图标字体 */}
 
-  </React.StrictMode>,
-  document.getElementById('root')
+        <Provider store={store}>
+            <App />
+        </Provider>
+
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
