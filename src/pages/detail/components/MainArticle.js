@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 
 import ReactMarkdown from 'react-markdown/with-html'
 import gfm from "remark-gfm"
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import { a11yDark as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { java, python, javascript, css, jsx } from "react-syntax-highlighter/dist/esm/languages/prism";
+import { renderers } from "../../../common/markdown/renderers.js";
 
 import {
     StyledMainArticle,
@@ -34,27 +32,6 @@ export const MainArticle = (props) => {
         authorName = props.articleMeta.getIn(["author", "name"]);
         authorAvatar = props.articleMeta.getIn(["author", "avatar"]);
     }
-
-    // markdown 代码高亮
-    SyntaxHighlighter.registerLanguage("javascript", javascript);
-    SyntaxHighlighter.registerLanguage("css", css);
-    SyntaxHighlighter.registerLanguage("jsx", jsx);
-    SyntaxHighlighter.registerLanguage("python", python);
-    SyntaxHighlighter.registerLanguage("java", java);
-    const renderers = {
-        code: (({ language, value }) => {
-            return (
-                <SyntaxHighlighter
-                    style={codeStyle}
-                    language = {language}
-                    children={value}
-                    showLineNumbers={true}
-                    wrapLongLines={true}
-                />
-            );
-        })
-    }
-
 
     return (
         <StyledMainArticle>
