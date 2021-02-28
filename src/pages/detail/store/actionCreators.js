@@ -22,7 +22,7 @@ export const getGetArticleAction = (cancelTokenSource) => {
                         dispatch(action);
                     }
                 })
-        }, 500);
+        }, 300);
         setTimeout(() => {
             axios.get("../api/articleDetails/article.md", { cancelToken: cancelTokenSource.token })
                 .then((res) => {
@@ -34,7 +34,7 @@ export const getGetArticleAction = (cancelTokenSource) => {
                     }
                     dispatch(action);
                 })
-        }, 1000);
+        }, 500);
 
     })
 }

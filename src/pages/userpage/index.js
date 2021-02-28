@@ -13,6 +13,7 @@ import {
 export const UserPage = (props) => {
     let element;
     if (!props.loginStatus) {
+        // 未登录的时候，通过更改网址进入到这个页面的时候
         element = (
             <div>您还没有登录</div>
         );

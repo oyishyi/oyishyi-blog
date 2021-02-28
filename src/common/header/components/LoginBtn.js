@@ -65,10 +65,10 @@ export const LoginBtn = (props) => {
                                     </AvatarItem>
                                     {/* 第四区块 */}
                                     <AvatarItem>
-                                        <span onClick={props.handleLogoutBtn}>
+                                        <Link to="/" onClick={props.handleLogoutBtn}>
                                             <i className="iconfont">&#xe621;</i>
                                             登出
-                                        </span>
+                                        </Link>
                                     </AvatarItem>
                                 </AvatarItems>
                             )
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(actionCreators.getChangeShowAvatarBox());  /* 注销的时候也要把扩展栏一同关闭 
                                                                    不然下次登录扩展栏还保持开启状态 */
             // 注销的时候更新页面
-            window.location.reload();
+            // window.location.reload();
         },
         // 显示登录组件，隐藏滚动条
         handleLoginBtn() {

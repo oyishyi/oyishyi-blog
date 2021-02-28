@@ -20,9 +20,11 @@ export function Header(props) {
     return (
         <React.Fragment>
             <Switch>
+                {/* 写文章页面的导航栏和其他的不一样 */}
                 <Route path="/write" exact component={WriteHeader} />
                 <Route path="/" component={NormalHeader} />
             </Switch>
+            {/* 登录页面没有 url，而是一个组件 */}
             {props.showLoginBtn ? <Login /> : null}
         </React.Fragment>
     )

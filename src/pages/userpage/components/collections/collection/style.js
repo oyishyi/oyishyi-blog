@@ -33,12 +33,18 @@ export const StyledArticleCollection = styled.div`
     }
     /* 文章标题和描述 */
     & > .article-info-box {
+        display: block;
         padding: 6px 20px 10px 57px;
+        text-decoration: none;
         & > .title {
             font-size: 17px;
             font-weight: bold;
             line-height: 1.5;
             color: #17181a;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
         }
         & .desc {
             display: flex;

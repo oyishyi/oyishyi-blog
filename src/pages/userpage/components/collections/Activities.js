@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => {
                             console.log(error);
                         }
                     });
-            }, 1000);
+            }, 500);
         }
     };
 }

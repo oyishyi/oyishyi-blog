@@ -123,6 +123,8 @@ export const getLoginAction = (loginAction) => {
                 }
                 dispatch(action);
             }
+            // 登录和注销后都需要刷新页面
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }

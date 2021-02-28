@@ -60,6 +60,7 @@ export const NormalHeader = (props) => {
         const func = props.getAdvisedTagList; // 分开写纯粹为了去除警告
         func();
     }, [props.getAdvisedTagList]) // 不能依赖 tagList
+    
     // 因为 getAdvisedTagList 会改变 tagList，**这样会无限运行**
     // 获取搜索框推荐标签
     function getAdvisedTagList() {
@@ -222,6 +223,11 @@ const mapDispatchToProps = (dispatch) => {
                 spin.style.transform = `rotate(${deg + 360}deg)`;
             }
             dispatch(actionCreators.getChangePageAction());
+        },
+        // 未登录时点击写文章会要求登录
+        handleLoginBtn() {
+            dispatch(actionCreators.getChangeShowLoginBtn(true));
+            document.documentElement.style.overflowY = "hidden";
         },
         // 导航栏滚动处理函数，决定是否显示导航栏
         handleShowHeader() {
