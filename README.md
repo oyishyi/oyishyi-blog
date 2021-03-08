@@ -21,7 +21,7 @@
   1. 主页
   2. 个人页面（登录后访问）
   3. 编辑个人资料页面
-  4. 写文章页面
+  4. 写文章页面（可以写 markdown 文章，右边有实时预览。不能提交）
 ## 5. 感想
 React 全家桶是真的多。本来以为只有 redux 和 router。然后为了让 redux 不可变要用到 immutable.js。 为了写 css-in-js 又要用到 styled-components。写 css 动画还有 css-transition-group 库。懒加载有 react-loadable 库（比起react的React.lazy 多了防止闪烁等功能）。甚至 markdown 渲染也有对应的 react-markdown 库，不过写完才发现还有 ace，codeMirror 这样的成熟解决方案，有时间升级一下。
 
