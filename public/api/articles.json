@@ -6,8 +6,8 @@
       "author": "oyishyi",
       "time": "1小时前",
       "tag": "前端",
-      "title": "前端学习笔记（二十三）",
-      "desc": "开始仿某个网站。记录一下过程中的一些思考或者遇到的坑。 1. styled component 由于 css 是全局作用的，经常会有 class 名字冲突，全局污染等情况出...",
+      "title": "前端学习笔记（二十八）--正则表达式",
+      "desc": "1. 怎么写 js 中的正则表达式包括在两个 / 之间，注意是注释的那个 /。不用（也不能）加引号等修饰。第二个/后面可以接修饰符，不属于表达式。 g：表示不是只匹配一个就...",
       "titlePicUrl": "../img/article-title.png"
     },
     {
@@ -15,8 +15,8 @@
       "author": "oyishyi",
       "time": "18小时前",
       "tag": "CSS",
-      "title": "前端学习笔记（二十二）",
-      "desc": "开始仿某个网站。记录一下过程中的一些思考或者遇到的坑。 1. styled component 由于 css 是全局作用的，经常会有 class 名字冲突，全局污染等情况出...",
+      "title": "前端学习笔记（二十七）--计算机网络",
+      "desc": "要准备春招了，复习一下计算机网络。 1. 应用层 http 是超文本传输协议，属于应用层的协议。 http 使用的是 tcp 连接。属于 client-server 结构。...",
       "titlePicUrl": "../img/article-title.png"
     },
     {

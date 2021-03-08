@@ -75,25 +75,50 @@ export const AuthorInfoInArticle = styled.div`
 
 // markdown 转化后的 html 文章的样式
 export const MainContent = styled.article`
-    line-height: 20px;
+    line-height: 25px;
     color: #333;
     width: 100%;
     & img {
-        display: block;
-        width: 80%;
-        height: 80%;
+            display: block;
+            width: 80%;
+            height: 80%;
     }
     & h1 {
         font-size: 30px;
         font-weight: 800;
         line-height: 60px;
         border-bottom: 1px solid rgba(0,0,0,0.2);
+        color: rgba(0,0,0,0.9);
     }
     & h2 {
-        font-size: 20px;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 50px;
+        color: rgba(0,0,0,0.8);
+    }
+    & h3 {
+        font-size: 26px;
         font-weight: 600;
         line-height: 40px;
-        color: #999;
+        color: rgba(0,0,0,0.7);
+    }
+    & h4 {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 40px;
+        color: rgba(0,0,0,0.6);
+    }
+    & h5 {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 40px;
+        color: rgba(0,0,0,0.5);
+    }
+    & h6 {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 30px;
+        color: rgba(0,0,0,0.4);
     }
     & p {
         margin-top: 10px;
@@ -110,13 +135,16 @@ export const MainContent = styled.article`
     /* inline-code */
     /* 块代码有第三方库高亮无需担心 */
     & > p > code{
-        color: #007fff;
-    }
-    /* & > pre {
-        user-modify: read-write;
+            padding: 2px 4px;
+            border-radius: 4px;
+            background-color: rgba(11, 112, 112, 0.1);
+            color: rgba(0, 224, 224, 1);
+        }
+    & > pre {
+        /* user-modify: read-write;
         -webkit-user-modify: read-write;
-        -moz-user-modify: read-write;
-    } */
+        -moz-user-modify: read-write; */
+    }
 `;
 
 

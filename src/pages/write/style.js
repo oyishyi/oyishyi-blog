@@ -34,7 +34,7 @@ export const StyledWrite = styled.main`
         overflow-y: scroll;
 
         /* 具体样式 */
-        line-height: 20px;
+        line-height: 25px;
         color: #333;
         & img {
             display: block;
@@ -95,8 +95,8 @@ export const StyledWrite = styled.main`
         & > p > code{
             padding: 2px 4px;
             border-radius: 4px;
-            background-color: rgba(0, 224, 224, 0.1);
-            color: #00E0E0;
+            background-color: rgba(11, 112, 112, 0.1);
+            color: rgba(0, 224, 224, 1);
         }
         /* & > pre {
             user-modify: read-write;

@@ -99,11 +99,15 @@ export const CollectionNav = styled.nav`
     background-color: #fff;
     /* 每个区块 */
     & > a {
-        display: block;
-        width: 32px;
+        box-sizing: border-box;
         font-size: 16px;
         font-weight: 500;
-        padding: 20px 30px;
+        
+        display: block;
+        /* 和蓝条长度一致 */
+        width: 92px;
+        padding: 20px 0;
+        text-align: center;
         color: rgb(49, 68, 91);
         cursor: pointer;
         text-decoration: none;
@@ -113,6 +117,14 @@ export const CollectionNav = styled.nav`
         }
         &.active {
             color: #007fff;
+            /* 点赞数字的css优先度较高，因此这里要写全 */
+            &.likes > .number{
+                color: #007fff;
+            }
+        }
+        /* 点赞数字颜色 */
+        &.likes > .number{
+            color: #b2bac2;
         }
     }
 `;
@@ -181,7 +193,7 @@ export const StyledFavorites = styled.div`
  * 右边栏的样式
  **************************************************************************************************/
 export const StyledUserPageRight = styled.div`
-    position: fixed; top: ${props => props.showHeader?81:20}px; right: 281.2px;
+    position: fixed; top: ${props => props.showHeader ? 81 : 20}px; right: 281.2px;
 
     display: flex;
     flex-flow: column;

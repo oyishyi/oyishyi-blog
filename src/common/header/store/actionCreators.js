@@ -100,13 +100,11 @@ export const getLoginAction = (loginAction) => {
                     // 登录成功，则关闭登录组件
                     dispatch(getChangeShowLoginBtn(false));
 
-                    // 登录后更新页面
-                    // window.location.reload();
-
                 // 登录失败
                 } else {
                     // 登录失败则不关闭登录组件
                     console.log("登录失败");
+                    return;
                 }
 
             // 注销行为

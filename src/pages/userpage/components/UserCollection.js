@@ -60,31 +60,35 @@ export const UserCollection = (props) => {
                         }
                     }}
                     to={"/userpage/" + params.id + "/activities"}
-                    onClick={props.handleChangeCollectionType}>
+                    onClick={props.clearCollectionList}>
                     动态
                 </NavLink>
                 <NavLink
                     className="articles"
                     to={"/userpage/" + params.id + "/articles"}
-                    onClick={props.handleChangeCollectionType}>
+                    onClick={props.clearCollectionList}>
                     文章
                 </NavLink>
                 <NavLink
                     className="favorites"
                     to={"/userpage/" + params.id + "/favorites"}
-                    onClick={props.handleChangeCollectionType}>
+                    onClick={props.clearCollectionList}>
                     收藏
                 </NavLink>
                 <NavLink
                     className="likes"
                     to={"/userpage/" + params.id + "/likes"}
-                    onClick={props.handleChangeCollectionType}>
-                    赞
+                    onClick={props.clearCollectionList}>
+                    <span>赞 </span>
+                    <span className="number">
+                        {"17.2k"}
+                        <i className="iconfont">&#xe629;</i>
+                    </span>
                 </NavLink>
                 <NavLink
                     className="comments"
                     to={"/userpage/" + params.id + "/comments"}
-                    onClick={props.handleChangeCollectionType}>
+                    onClick={props.clearCollectionList}>
                     评论
                 </NavLink>
             </CollectionNav>
@@ -101,11 +105,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleChangeCollectionType(e) {
-            // 改变版块前，要清空 collectionList 为 null，这样下个板块才会显示懒加载样式
-            dispatch(actionCreators.getClearCollectionListAction());
-        },
         clearCollectionList() {
+            // 改变版块前，要清空 collectionList 为 null，这样下个板块才会显示懒加载样式
             dispatch(actionCreators.getClearCollectionListAction());
         }
     }

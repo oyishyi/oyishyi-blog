@@ -6,6 +6,12 @@ import {
 } from "../style.js";
 
 export const MetaInfo = (props) => {
+    function formatDate(originalDate) {
+        const year = originalDate.getFullYear();
+        const month = originalDate.getMonth() + 1;
+        const date = originalDate.getDate();
+        return year+"-"+month+"-"+date;
+    }
     return (
         <StyledMetaInfo>
             <div className="favorites">
@@ -18,7 +24,7 @@ export const MetaInfo = (props) => {
             </div>
             <div className="anniversary">
                 <span>加入于</span>
-                <time className="data">{new Date().toDateString()}</time>
+                <time className="data">{formatDate(new Date())}</time>
             </div>
         </StyledMetaInfo>
     )

@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux";
 
 // 导入样式
-import Topics from "./components/Topics.js";
+import Topics from "./components/Topics.js"; // 太丑了，改好看了再用
 import Articles from "./components/Articles.js";
 import Advertisements from "./components/Advertisements.js";
 import RecommendedAuthors from "./components/RecommendedAuthors.js";
@@ -22,8 +22,8 @@ export const Homepage = (props) => {
             {/* 主页中间那 960px 宽的部分 */}
             <div className="Homepage-main">
                 <HomepageLeft>
-                    <img alt="主页图片" />
-                    <Topics />
+                    <img alt="还没想好放什么" />
+                    {/* <Topics /> */}
                     <Articles />
                 </HomepageLeft>
                 <HomepageRight>
